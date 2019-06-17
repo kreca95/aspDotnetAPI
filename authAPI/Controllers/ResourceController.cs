@@ -96,6 +96,7 @@ namespace authAPI.Controllers
             if (filtRes != null)
             {
                 var cache = new RedisCacheProvider();
+
                 cache.Set("filter", filtRes, TimeSpan.FromMinutes(5));
                 return Ok(filtRes);
 

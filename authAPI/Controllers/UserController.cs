@@ -38,11 +38,13 @@ namespace authAPI.Controllers
 
         //[Authorize]
         //[Cache(Duration =300)]
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public IHttpActionResult GetAllUsers()
         {
             IEnumerable<User> users;
             users = _context.Users
+                .Include("Role")
                 .ToList();
 
             return Ok(users);

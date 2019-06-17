@@ -22,13 +22,14 @@ namespace authAPI
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
           
 
-            var user = db.Users.Any(x => x.UserName == context.UserName && x.Password == context.Password);
+            var user = db.Users.Where(x => x.UserName == context.UserName && x.Password == context.Password).FirstOrDefault();
 
-            if (user)
+            if (user!=null)
             {
                 //identity.AddClaim(new Claim(ClaimTypes.Role, "admin"));
                 identity.AddClaim(new Claim("username", context.UserName));
                 identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Role, user.Role.Name));
                 context.Validated(identity);
 
             }
