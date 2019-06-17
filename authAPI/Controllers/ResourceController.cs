@@ -1,5 +1,8 @@
 ﻿using authAPI.Models;
 using authAPI.Models.DTOs;
+using authAPI.Redis;
+using ServiceStack.Redis;
+using ServiceStack.Redis.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +13,12 @@ using WebApi.OutputCache.V2;
 
 namespace authAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/resource")]
     public class ResourceController : ApiController
     {
         private readonly Models.AppContext db = new Models.AppContext();
-
+        
         [HttpGet]
         public IHttpActionResult GetResource()
         {
@@ -67,6 +70,8 @@ namespace authAPI.Controllers
         {
             if (resource!=null)
             {
+
+
                 var res = new Resource()
                 {
                     Language = resource.Language,
@@ -74,6 +79,7 @@ namespace authAPI.Controllers
                     Value = resource.Value
 
                 };
+
                 db.Resources.Add(res);
                 db.SaveChanges();
                 return Ok(res);
@@ -86,9 +92,21 @@ namespace authAPI.Controllers
         [CacheOutput(ClientTimeSpan = 100, ServerTimeSpan = 100)]
         public IHttpActionResult GetFilterResource([FromUri]string filter)
         {
-            var filtRes = db.Resources.Where(x => x.TagsCompressed.Contains(filter));
+            var filtRes = db.Resources.Where(x => x.TagsCompressed.Contains(filter)).FirstOrDefault();
             if (filtRes!=null)
             {
+                var cache = new RedisCacheProvider();
+
+
+                if (cache.IsInCache("filter"))
+                {
+                    cache.Get<Resource>("filter");
+                }
+                else
+                {
+                    cache.Set("filter", filtRes, TimeSpan.FromMinutes(5));
+                }
+
                 return Ok(filtRes);
             }
             return NotFound();

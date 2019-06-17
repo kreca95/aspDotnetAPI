@@ -13,7 +13,7 @@ namespace authAPI.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201905201156277_initial"; }
+            get { return "201906170822059_initial"; }
         }
         
         string IMigrationMetadata.Source

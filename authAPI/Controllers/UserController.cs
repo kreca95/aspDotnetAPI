@@ -36,13 +36,14 @@ namespace authAPI.Controllers
             return Ok(new { name = userDTO.UserName, pass = userDTO.Password });
         }
 
-        [Authorize]
-        [Cache(Duration =300)]
+        //[Authorize]
+        //[Cache(Duration =300)]
         [HttpGet]
         public IHttpActionResult GetAllUsers()
         {
             IEnumerable<User> users;
-            users = _context.Users.ToList();
+            users = _context.Users
+                .ToList();
 
             return Ok(users);
         }
