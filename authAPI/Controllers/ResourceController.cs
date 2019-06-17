@@ -18,11 +18,11 @@ namespace authAPI.Controllers
     public class ResourceController : ApiController
     {
         private readonly Models.AppContext db = new Models.AppContext();
-        
+
         [HttpGet]
         public IHttpActionResult GetResource()
         {
-            var res =db.Resources.ToList();
+            var res = db.Resources.ToList();
             foreach (var item in res)
             {
                 item.Tags = item.TagsCompressed.Split(',');
@@ -40,7 +40,7 @@ namespace authAPI.Controllers
         {
             var res = db.Resources.FirstOrDefault(x => x.Id == id);
 
-            if (res!=null)
+            if (res != null)
             {
                 res.Tags = res.TagsCompressed.Split(',');
                 return Ok(res);
@@ -50,13 +50,13 @@ namespace authAPI.Controllers
 
 
         [HttpDelete]
-        public IHttpActionResult DeleteResource (int id)
+        public IHttpActionResult DeleteResource(int id)
         {
             var res = db.Resources.FirstOrDefault(x => x.Id == id);
 
             if (res != null)
             {
-                
+
                 db.Resources.Remove(res);
                 db.SaveChanges();
                 return Ok(res);
@@ -68,7 +68,7 @@ namespace authAPI.Controllers
         [HttpPost]
         public IHttpActionResult CreateResource([FromBody] ResourceDTO resource)
         {
-            if (resource!=null)
+            if (resource != null)
             {
 
 
@@ -89,25 +89,16 @@ namespace authAPI.Controllers
 
         [HttpGet]
         [Route("filter")]
-        [CacheOutput(ClientTimeSpan = 100, ServerTimeSpan = 100)]
+        //[CacheOutput(ClientTimeSpan = 100, ServerTimeSpan = 100)]
         public IHttpActionResult GetFilterResource([FromUri]string filter)
         {
-            var filtRes = db.Resources.Where(x => x.TagsCompressed.Contains(filter)).FirstOrDefault();
-            if (filtRes!=null)
+            var filtRes = db.Resources.Where(x => x.TagsCompressed.Contains(filter));
+            if (filtRes != null)
             {
                 var cache = new RedisCacheProvider();
-
-
-                if (cache.IsInCache("filter"))
-                {
-                    cache.Get<Resource>("filter");
-                }
-                else
-                {
-                    cache.Set("filter", filtRes, TimeSpan.FromMinutes(5));
-                }
-
+                cache.Set("filter", filtRes, TimeSpan.FromMinutes(5));
                 return Ok(filtRes);
+
             }
             return NotFound();
         }
