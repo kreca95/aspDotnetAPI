@@ -92,10 +92,16 @@ namespace authAPI.Controllers
         //[CacheOutput(ClientTimeSpan = 100, ServerTimeSpan = 100)]
         public IHttpActionResult GetFilterResource([FromUri]string filter)
         {
-            var filtRes = db.Resources.Where(x => x.TagsCompressed.Contains(filter));
+            List<Resource> filtRes = db.Resources.Where(x => x.TagsCompressed.Contains(filter)).ToList();
             if (filtRes != null)
             {
                 var cache = new RedisCacheProvider();
+
+                if (cache.IsInCache("filter"))
+                {
+                    cache.Set("filter",filtRes,TimeSpan.FromMinutes(5));
+                    return  Ok(cache.Get<List<Resource>>("filter"));
+                }
 
                 cache.Set("filter", filtRes, TimeSpan.FromMinutes(5));
                 return Ok(filtRes);

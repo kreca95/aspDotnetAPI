@@ -203,6 +203,7 @@
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WebApiController.cs" />
+    <Compile Include="CustomLogging.cs" />
     <Compile Include="Migrations\201905312145340_10000.cs" />
     <Compile Include="Migrations\201905312145340_10000.Designer.cs">
       <DependentUpon>201905312145340_10000.cs</DependentUpon>
@@ -237,6 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
+    <Content Include="Log4Net.config" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

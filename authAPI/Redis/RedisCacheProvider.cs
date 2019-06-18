@@ -19,6 +19,7 @@ namespace authAPI.Redis
         public void Set<T>(string key, T value)
         {
             this.Set(key, value, TimeSpan.Zero);
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, key + value);
         }
 
 
@@ -30,6 +31,8 @@ namespace authAPI.Redis
             using (RedisClient client = new RedisClient(_endPoint))
             {
                 client.As<T>().SetValue(key, value, timeout);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.CACHE, key);
+
             }
         }
         public T Get<T>(string key)
