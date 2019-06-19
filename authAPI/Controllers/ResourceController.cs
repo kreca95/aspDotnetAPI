@@ -95,15 +95,16 @@ namespace authAPI.Controllers
             List<Resource> filtRes = db.Resources.Where(x => x.TagsCompressed.Contains(filter)).ToList();
             if (filtRes != null)
             {
-                var cache = new RedisCacheProvider();
+                var cache = new CacheFactory();
+                var newCache = cache.GetCacheProvider("redis");
 
-                if (cache.IsInCache("filter"))
+                if (newCache.IsInCache("filter"))
                 {
-                    cache.Set("filter",filtRes,TimeSpan.FromMinutes(5));
-                    return  Ok(cache.Get<List<Resource>>("filter"));
+                    newCache.Set("filter",filtRes,TimeSpan.FromMinutes(5));
+                    return  Ok(newCache.Get<List<Resource>>("filter"));
                 }
 
-                cache.Set("filter", filtRes, TimeSpan.FromMinutes(5));
+                newCache.Set("filter", filtRes, TimeSpan.FromMinutes(5));
                 return Ok(filtRes);
 
             }
