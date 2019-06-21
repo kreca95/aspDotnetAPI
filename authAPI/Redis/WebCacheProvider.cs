@@ -13,6 +13,8 @@ namespace authAPI.Redis
         public T Get<T>(string key)
         {
             var cache = (T)HttpRuntime.Cache.Get(key);
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.CACHE, key + "from webCache");
+
             return cache;
         }
 
@@ -40,6 +42,8 @@ namespace authAPI.Redis
         public void Set<T>(string key, T value)
         {
             HttpRuntime.Cache.Insert(key, value);
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.CACHE, key + "from webCache");
+
         }
 
         public void Set<T>(string key, T value, TimeSpan timeout)

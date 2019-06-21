@@ -95,8 +95,8 @@ namespace authAPI.Controllers
             List<Resource> filtRes = db.Resources.Where(x => x.TagsCompressed.Contains(filter)).ToList();
             if (filtRes != null)
             {
-                var cache = new CacheFactory();
-                var newCache = cache.GetCacheProvider("redis");
+                //var cache = new CacheFactory();
+                var newCache = CacheFactory.GetCacheProvider("web");
 
                 if (newCache.IsInCache("filter"))
                 {

@@ -231,6 +231,7 @@
     <Compile Include="Redis\RedisConfigurationManager.cs" />
     <Compile Include="Redis\RedisConfigurationSection.cs" />
     <Compile Include="Redis\WebCacheProvider.cs" />
+    <Compile Include="RefreshTokenProvider.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
