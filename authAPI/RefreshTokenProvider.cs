@@ -12,6 +12,7 @@ namespace authAPI
 
         public override Task CreateAsync(AuthenticationTokenCreateContext context)
         {
+            context.Ticket.Properties.AllowRefresh = true;
 
             var guid = Guid.NewGuid().ToString();
             context.Ticket.Properties.ExpiresUtc= DateTimeOffset.Now.AddHours(8);
