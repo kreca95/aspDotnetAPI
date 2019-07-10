@@ -96,15 +96,15 @@ namespace authAPI.Controllers
             if (filtRes != null)
             {
                 //var cache = new CacheFactory();
-                var newCache = CacheFactory.GetCacheProvider("web");
+                var newCache = CacheFactory.GetCacheProvider("redis");
 
-                if (newCache.IsInCache("filter"))
+                if (newCache.IsInCache(filter))
                 {
-                    newCache.Set("filter",filtRes,TimeSpan.FromMinutes(5));
-                    return  Ok(newCache.Get<List<Resource>>("filter"));
+                    newCache.Set(filter,filtRes,TimeSpan.FromMinutes(5));
+                    return  Ok(newCache.Get<List<Resource>>(filter));
                 }
 
-                newCache.Set("filter", filtRes, TimeSpan.FromMinutes(5));
+                newCache.Set(filter, filtRes, TimeSpan.FromMinutes(5));
                 return Ok(filtRes);
 
             }
