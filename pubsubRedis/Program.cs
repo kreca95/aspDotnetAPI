@@ -10,11 +10,24 @@ namespace pubsubRedis
     class Program
     {
         private static ConnectionMultiplexer connection =ConnectionMultiplexer.Connect("localhost");
-        private const string ChatChannel = "Chat";
+        private static  string ChatChannel =string.Empty;
         private static string userName = string.Empty;
+        readonly static Random rnd = new Random();
 
         static void Main(string[] args)
         {
+            List<string> genres = new List<string>();
+            genres.Add("games");
+            genres.Add("music");
+            for (int i = 0; i < genres.Count; i++)
+            {
+                Console.WriteLine($"{i} {genres[i]}");
+            }
+            Console.WriteLine("izaberite temu");
+            int index = Convert.ToInt32(Console.ReadLine());
+
+
+            ChatChannel = genres[index];
             Console.Write("Unesite ime: ");
             userName = Console.ReadLine();
             var pubsub = connection.GetSubscriber();
