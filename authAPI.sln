@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "authAPI", "authAPI\authAPI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pubsubRedis", "pubsubRedis\pubsubRedis.csproj", "{42BD176F-9124-4659-BA32-91EE6E30FCDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dealer_router", "dealer_router\dealer_router.csproj", "{07FFE694-BFB3-41C9-8705-2ACD975B436F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{42BD176F-9124-4659-BA32-91EE6E30FCDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42BD176F-9124-4659-BA32-91EE6E30FCDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42BD176F-9124-4659-BA32-91EE6E30FCDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07FFE694-BFB3-41C9-8705-2ACD975B436F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07FFE694-BFB3-41C9-8705-2ACD975B436F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07FFE694-BFB3-41C9-8705-2ACD975B436F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07FFE694-BFB3-41C9-8705-2ACD975B436F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
