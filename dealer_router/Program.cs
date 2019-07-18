@@ -17,21 +17,24 @@ namespace ZMQGuide
                 Console.WriteLine("Unesite nick");
 
                 var nick = Console.ReadLine();
-                Console.WriteLine("Unesite poruku");
-                var messageContent = Console.ReadLine();
-                Message message = new Message(nick, messageContent);
-                client.SendFrame(message.ToString());
+                while (true)
+                {
+                    Console.WriteLine("Unesite poruku");
+                    var messageContent = Console.ReadLine();
+                    Message message = new Message(nick, messageContent);
+                    client.SendFrame(message.ToString());
 
-                string m1 = server.ReceiveFrameString();
-                string [] nickname = m1.Split(',');
-                Console.WriteLine("From Client: {0}", nickname[0]);
+                    string m1 = server.ReceiveFrameString();
+                    string[] nickname = m1.Split(',');
+                    Console.WriteLine("From Client: {0},message: {1}", nickname[0],nickname[1]);
 
-                server.SendFrame("Hi "+nickname[0]);
+                    server.SendFrame("Hi " + nickname[0]);
 
-                string m2 = client.ReceiveFrameString();
-                Console.WriteLine("From Server: {0}", m2);
+                    string m2 = client.ReceiveFrameString();
+                    Console.WriteLine("From Server: {0}", m2);
 
-                Console.Read();
+                }
+
             }
         }
     }
